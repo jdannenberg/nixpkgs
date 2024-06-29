@@ -162,6 +162,17 @@ in {
         '';
       };
 
+      packages = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        example = [
+          "git-crypt"
+        ];
+        description = ''
+          Any additional packages which are required for `nixos-rebuild` to work.
+        '';
+      };
+
     };
 
   };
@@ -204,7 +215,7 @@ in {
         gitMinimal
         config.nix.package.out
         config.programs.ssh.package
-      ];
+      ] ++ cfg.packages;
 
       script = let
         nixos-rebuild = "${config.system.build.nixos-rebuild}/bin/nixos-rebuild";
